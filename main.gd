@@ -23,7 +23,10 @@ func _process(delta: float) -> void:
 		enemyCharacter.position = enemyCharacter.position + direction*delta*40
 
 func _on_main_menu_start_game() -> void:
+	var screen_size = get_viewport().get_visible_rect().size
+	var startPlayerPosition = screen_size/2
 	$PlayerScene.visible = true
+	$PlayerScene.get_node("CharacterBody2D").position = startPlayerPosition
 
 func _on_mob_spawn_timer_timeout() -> void:
 	
