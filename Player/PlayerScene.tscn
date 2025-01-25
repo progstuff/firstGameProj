@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dmsrlwfma52bm" path="res://Player/PlayerSprites.png" id="1_0bqha"]
 [ext_resource type="Script" path="res://Player/PlayerScript.gd" id="1_qpy6h"]
+[ext_resource type="PackedScene" uid="uid://coe1q8ioluayu" path="res://Weapon/Sword/SwordScene.tscn" id="3_sj6u4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u162p"]
 size = Vector2(19, 16)
@@ -162,12 +163,8 @@ tracks/0/keys = {
 "values": [9, 10, 11]
 }
 
-[sub_resource type="Animation" id="Animation_ripw1"]
-resource_name = "Dash"
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mhg6k"]
 _data = {
-"Dash": SubResource("Animation_ripw1"),
 "RESET": SubResource("Animation_rs1fh"),
 "down": SubResource("Animation_0fnxw"),
 "idleDown": SubResource("Animation_q3fd5"),
@@ -233,7 +230,7 @@ blend_mode = 1
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_u341m"]
 states/Idle/node = SubResource("AnimationNodeBlendSpace2D_8sjjl")
-states/Idle/position = Vector2(655, 100)
+states/Idle/position = Vector2(727, 100)
 states/Walk/node = SubResource("AnimationNodeBlendSpace2D_s3i8d")
 states/Walk/position = Vector2(515, 100)
 transitions = ["Start", "Walk", SubResource("AnimationNodeStateMachineTransition_5dk6k"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_uj0rm"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_7n3de")]
@@ -270,4 +267,8 @@ parameters/Walk/blend_position = Vector2(0, 0)
 [node name="Timer" type="Timer" parent="CharacterBody2D"]
 wait_time = 0.1
 
+[node name="SwordScene" parent="CharacterBody2D" instance=ExtResource("3_sj6u4")]
+visible = false
+
 [connection signal="timeout" from="CharacterBody2D/Timer" to="CharacterBody2D" method="_on_timer_timeout"]
+[connection signal="draw" from="CharacterBody2D/SwordScene" to="CharacterBody2D/SwordScene" method="_on_draw"]

@@ -13,6 +13,7 @@ var currentPlayerSpeed = walkSpeed
 
 func _ready() -> void:
 	motion_mode = MOTION_MODE_FLOATING
+	$SwordScene.visible = true
 	
 func _physics_process(delta: float) -> void:
 	
@@ -46,3 +47,7 @@ func move() -> void:
 func _on_timer_timeout() -> void:
 	currentPlayerSpeed = walkSpeed
 	$CollisionShape2D.disabled = false
+	
+
+	
+	

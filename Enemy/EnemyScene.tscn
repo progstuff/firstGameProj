@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://b2fj14ljjv71w"]
+[gd_scene load_steps=29 format=3 uid="uid://b2fj14ljjv71w"]
 
 [ext_resource type="Script" path="res://Enemy/EnemyScript.gd" id="1_8ws81"]
 [ext_resource type="Texture2D" uid="uid://sgn4sgtikpm0" path="res://Enemy/EnemySprites.png" id="2_vep1b"]
@@ -20,6 +20,9 @@ tracks/0/keys = {
 "update": 1,
 "values": [1]
 }
+
+[sub_resource type="Animation" id="Animation_eqdgw"]
+resource_name = "death"
 
 [sub_resource type="Animation" id="Animation_0fnxw"]
 resource_name = "down"
@@ -165,6 +168,7 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mhg6k"]
 _data = {
 "RESET": SubResource("Animation_rs1fh"),
+"death": SubResource("Animation_eqdgw"),
 "down": SubResource("Animation_0fnxw"),
 "idleDown": SubResource("Animation_q3fd5"),
 "idleLeft": SubResource("Animation_2wjdc"),
