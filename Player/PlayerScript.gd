@@ -15,7 +15,7 @@ func _ready() -> void:
 	motion_mode = MOTION_MODE_FLOATING
 	$SwordScene.visible = true
 	
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	
 	match current_state:
 		states.MOVE:

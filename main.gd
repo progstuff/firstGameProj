@@ -11,42 +11,49 @@ func _process(delta: float) -> void:
 	var enemies = $Mobs.get_children()
 	for enemy in enemies:
 		var enemyCharacter = enemy.get_node("CharacterBody2D")
-		var enemyPosition = enemyCharacter.position
-		var direction = enemyPosition.direction_to(playerPosition)
-		
-		if((enemyPosition - playerPosition).length() < 30):
-			direction = Vector2.ZERO
+		if(enemyCharacter.live == 0):
+			$Mobs.remove_child(enemy)
+			enemy.queue_free()
 		else:
-			direction = direction.normalized()
+			var enemyPosition = enemyCharacter.position
+			var direction = enemyPosition.direction_to(playerPosition)
+			
+			if((enemyPosition - playerPosition).length() < 30):
+				direction = Vector2.ZERO
+			if(enemyCharacter.live <= 0):
+				direction = Vector2.ZERO
 
-		enemyCharacter.input_movement = direction
-		enemyCharacter.position = enemyCharacter.position + direction*delta*40
+			direction = direction.normalized()
+			
+			enemyCharacter.input_movement = direction
+			enemyCharacter.position = enemyCharacter.position + direction*delta*enemyCharacter.speed
+			
 
 func _on_main_menu_start_game() -> void:
 	var screen_size = get_viewport().get_visible_rect().size
 	var startPlayerPosition = screen_size/2
 	$PlayerScene.visible = true
 	$PlayerScene.get_node("CharacterBody2D").position = startPlayerPosition
+	$MobSpawnTimer.start()
 
 func _on_mob_spawn_timer_timeout() -> void:
 	
-	var rand = RandomNumberGenerator.new()
-	var screen_size = get_viewport().get_visible_rect().size
-	
-	var playerPosition = $PlayerScene/CharacterBody2D.position
-	
-	var enemiesCount = rand.randi_range(1, 10)
-	for i in range(0,enemiesCount):
-		var enemyObject = enemyScene.instantiate()
+	if($Mobs.get_child_count() < 100):
+		var rand = RandomNumberGenerator.new()
+		var screen_size = get_viewport().get_visible_rect().size
 		
-		rand.randomize()
-		var x = rand.randf_range(0, screen_size.x)
-		rand.randomize()
-		var y = rand.randf_range(0, screen_size.y)
-		var randomPos = Vector2(x,y)
-		
-		enemyObject.get_node("CharacterBody2D").position = Vector2(x, y)
-		enemyObject.get_node("CharacterBody2D").speed = rand.randi_range(15, 40)
-		$Mobs.add_child(enemyObject)
+		var enemiesCount = rand.randi_range(10, 30)
+		for i in range(0,enemiesCount):
+			var enemyObject = enemyScene.instantiate()
+			
+			rand.randomize()
+			var x = rand.randf_range(0, screen_size.x)
+			rand.randomize()
+			var y = rand.randf_range(0, screen_size.y)
+			var randomPos = Vector2(x,y)
+			
+			enemyObject.get_node("CharacterBody2D").position = randomPos
+			enemyObject.get_node("CharacterBody2D").speed = rand.randi_range(20, 80)
+			$Mobs.add_child(enemyObject)
 		
 		

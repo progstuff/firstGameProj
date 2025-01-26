@@ -4,10 +4,10 @@
 [ext_resource type="Script" path="res://Weapon/Sword/Sword.gd" id="1_lsqwb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q3sbo"]
-size = Vector2(106, 30.25)
+size = Vector2(106, 41)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wm5bn"]
-size = Vector2(107, 27)
+size = Vector2(107, 42.5)
 
 [sub_resource type="Animation" id="Animation_2ywvl"]
 length = 0.3
@@ -170,36 +170,38 @@ _data = {
 [node name="SwordScene" type="Node2D"]
 script = ExtResource("1_lsqwb")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="sword" type="Area2D" parent="." groups=["weapon"]]
+collision_layer = 4
+collision_mask = 2
 
-[node name="SwordUpShape" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0, -34.875)
+[node name="SwordUpShape" type="CollisionShape2D" parent="sword"]
+position = Vector2(0, -29.5)
 shape = SubResource("RectangleShape2D_q3sbo")
 
-[node name="SwordDnShape" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0.5, 37)
+[node name="SwordDnShape" type="CollisionShape2D" parent="sword"]
+position = Vector2(0.5, 29.25)
 shape = SubResource("RectangleShape2D_wm5bn")
 
-[node name="SwordUp" type="Sprite2D" parent="Area2D"]
+[node name="SwordUp" type="Sprite2D" parent="sword"]
 position = Vector2(-13, -3)
 texture = ExtResource("1_femuq")
 hframes = 6
 vframes = 4
 frame = 3
 
-[node name="SwordDn" type="Sprite2D" parent="Area2D"]
+[node name="SwordDn" type="Sprite2D" parent="sword"]
 position = Vector2(-13, -3)
 texture = ExtResource("1_femuq")
 hframes = 6
 vframes = 4
 frame = 15
 
-[node name="AttackTimer" type="Timer" parent="Area2D"]
+[node name="AttackTimer" type="Timer" parent="sword"]
 wait_time = 2.0
 
-[node name="AnimationSword" type="AnimationPlayer" parent="Area2D"]
+[node name="AnimationSword" type="AnimationPlayer" parent="sword"]
 libraries = {
 "": SubResource("AnimationLibrary_ploog")
 }
 
-[connection signal="timeout" from="Area2D/AttackTimer" to="." method="_on_attack_timer_timeout"]
+[connection signal="timeout" from="sword/AttackTimer" to="." method="_on_attack_timer_timeout"]

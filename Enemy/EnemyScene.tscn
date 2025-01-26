@@ -1,7 +1,8 @@
-[gd_scene load_steps=29 format=3 uid="uid://b2fj14ljjv71w"]
+[gd_scene load_steps=38 format=3 uid="uid://b2fj14ljjv71w"]
 
 [ext_resource type="Script" path="res://Enemy/EnemyScript.gd" id="1_8ws81"]
 [ext_resource type="Texture2D" uid="uid://sgn4sgtikpm0" path="res://Enemy/EnemySprites.png" id="2_vep1b"]
+[ext_resource type="Texture2D" uid="uid://8tsyypmwba7c" path="res://Enemy/DeathSprites.png" id="3_l67af"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u162p"]
 size = Vector2(19, 16)
@@ -23,6 +24,70 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_eqdgw"]
 resource_name = "death"
+length = 0.18
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DeathSprites:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.03, 0.06, 0.09, 0.12, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 6]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Area2D/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("DeathSprites:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.17),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"erase"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_0fnxw"]
 resource_name = "down"
@@ -179,6 +244,29 @@ _data = {
 "up": SubResource("Animation_241xi")
 }
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_lxhir"]
+animation = &"death"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ygxm6"]
+animation = &"death"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_p0u3u"]
+animation = &"death"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_e6p3l"]
+animation = &"death"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_0f5tm"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_lxhir")
+blend_point_0/pos = Vector2(-1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_ygxm6")
+blend_point_1/pos = Vector2(0, 1)
+blend_point_2/node = SubResource("AnimationNodeAnimation_p0u3u")
+blend_point_2/pos = Vector2(1, 0)
+blend_point_3/node = SubResource("AnimationNodeAnimation_e6p3l")
+blend_point_3/pos = Vector2(0, -1)
+blend_mode = 1
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_d5t50"]
 animation = &"idleLeft"
 
@@ -231,16 +319,27 @@ blend_mode = 1
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7n3de"]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ggirm"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_580qv"]
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_u341m"]
+states/Dead/node = SubResource("AnimationNodeBlendSpace2D_0f5tm")
+states/Dead/position = Vector2(533, 52)
 states/Idle/node = SubResource("AnimationNodeBlendSpace2D_8sjjl")
-states/Idle/position = Vector2(655, 100)
+states/Idle/position = Vector2(618, 144)
+states/Start/position = Vector2(121, 144)
 states/Walk/node = SubResource("AnimationNodeBlendSpace2D_s3i8d")
-states/Walk/position = Vector2(515, 100)
-transitions = ["Start", "Walk", SubResource("AnimationNodeStateMachineTransition_5dk6k"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_uj0rm"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_7n3de")]
+states/Walk/position = Vector2(436, 144)
+transitions = ["Start", "Walk", SubResource("AnimationNodeStateMachineTransition_5dk6k"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_uj0rm"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_7n3de"), "Walk", "Dead", SubResource("AnimationNodeStateMachineTransition_ggirm"), "Idle", "Dead", SubResource("AnimationNodeStateMachineTransition_580qv")]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6faqu"]
+size = Vector2(29, 28)
 
 [node name="EnemyScene" type="Node2D"]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["enemies"]]
+collision_layer = 2
 script = ExtResource("1_8ws81")
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
@@ -263,5 +362,21 @@ libraries = {
 [node name="AnimationTree" type="AnimationTree" parent="CharacterBody2D"]
 tree_root = SubResource("AnimationNodeStateMachine_u341m")
 anim_player = NodePath("../Animations")
+parameters/Dead/blend_position = Vector2(0, 0)
 parameters/Idle/blend_position = Vector2(0, 0)
 parameters/Walk/blend_position = Vector2(0, 0)
+
+[node name="Area2D" type="Area2D" parent="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_6faqu")
+
+[node name="DeathSprites" type="Sprite2D" parent="CharacterBody2D"]
+visible = false
+texture = ExtResource("3_l67af")
+hframes = 7
+
+[connection signal="area_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_on_area_2d_area_entered"]
