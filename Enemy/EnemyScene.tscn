@@ -53,7 +53,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Area2D/CollisionShape2D:disabled")
+tracks/2/path = NodePath("enemy/CollisionShape2D:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -339,6 +339,7 @@ size = Vector2(29, 28)
 [node name="EnemyScene" type="Node2D"]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["enemies"]]
+z_index = 1
 collision_layer = 2
 script = ExtResource("1_8ws81")
 
@@ -366,11 +367,11 @@ parameters/Dead/blend_position = Vector2(0, 0)
 parameters/Idle/blend_position = Vector2(0, 0)
 parameters/Walk/blend_position = Vector2(0, 0)
 
-[node name="Area2D" type="Area2D" parent="CharacterBody2D"]
+[node name="enemy" type="Area2D" parent="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/enemy"]
 position = Vector2(0.5, 0)
 shape = SubResource("RectangleShape2D_6faqu")
 
@@ -379,4 +380,4 @@ visible = false
 texture = ExtResource("3_l67af")
 hframes = 7
 
-[connection signal="area_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_on_area_2d_area_entered"]
+[connection signal="area_entered" from="CharacterBody2D/enemy" to="CharacterBody2D" method="_on_area_2d_area_entered"]

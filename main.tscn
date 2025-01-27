@@ -1,11 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://clf77pvuvpr6c"]
+[gd_scene load_steps=3 format=3 uid="uid://clf77pvuvpr6c"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_4ebhd"]
-[ext_resource type="PackedScene" uid="uid://d22mg64hermqi" path="res://Player/PlayerScene.tscn" id="1_xr8n0"]
 [ext_resource type="PackedScene" uid="uid://w5kbguyafcqp" path="res://GUI/MainMenu.tscn" id="2_yt8pu"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_4ebhd")
+
+[node name="MobSpawnTimer" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="Mobs" type="Node" parent="."]
+
+[node name="Player" type="Node" parent="."]
 
 [node name="MainMenu" parent="." instance=ExtResource("2_yt8pu")]
 anchors_preset = -1
@@ -18,13 +24,12 @@ offset_right = 592.0
 offset_bottom = 308.0
 size_flags_horizontal = 8
 
-[node name="PlayerScene" parent="." instance=ExtResource("1_xr8n0")]
-visible = false
+[node name="Map" type="Node2D" parent="."]
+z_index = -1
 
-[node name="MobSpawnTimer" type="Timer" parent="."]
-wait_time = 3.0
+[node name="DebugTimer" type="Timer" parent="."]
+autostart = true
 
-[node name="Mobs" type="Node" parent="."]
-
-[connection signal="startGame" from="MainMenu" to="." method="_on_main_menu_start_game"]
 [connection signal="timeout" from="MobSpawnTimer" to="." method="_on_mob_spawn_timer_timeout"]
+[connection signal="startGame" from="MainMenu" to="." method="_on_main_menu_start_game"]
+[connection signal="timeout" from="DebugTimer" to="." method="_on_debug_timer_timeout"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://d22mg64hermqi"]
+[gd_scene load_steps=30 format=3 uid="uid://d22mg64hermqi"]
 
 [ext_resource type="Texture2D" uid="uid://dmsrlwfma52bm" path="res://Player/PlayerSprites.png" id="1_0bqha"]
 [ext_resource type="Script" path="res://Player/PlayerScript.gd" id="1_qpy6h"]
@@ -235,6 +235,9 @@ states/Walk/node = SubResource("AnimationNodeBlendSpace2D_s3i8d")
 states/Walk/position = Vector2(515, 100)
 transitions = ["Start", "Walk", SubResource("AnimationNodeStateMachineTransition_5dk6k"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_uj0rm"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_7n3de")]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xskfl"]
+size = Vector2(26, 30)
+
 [node name="PlayerScene" type="Node2D"]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["player"]]
@@ -273,5 +276,16 @@ visible = false
 light_mask = 4
 visibility_layer = 2
 
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+zoom = Vector2(1.5, 1.5)
+
+[node name="player" type="Area2D" parent="CharacterBody2D"]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/player"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_xskfl")
+
 [connection signal="timeout" from="CharacterBody2D/Timer" to="CharacterBody2D" method="_on_timer_timeout"]
 [connection signal="draw" from="CharacterBody2D/SwordScene" to="CharacterBody2D/SwordScene" method="_on_draw"]
+[connection signal="area_entered" from="CharacterBody2D/player" to="CharacterBody2D" method="_on_player_area_entered"]
