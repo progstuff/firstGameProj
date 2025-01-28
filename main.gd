@@ -38,7 +38,10 @@ func _process(delta: float) -> void:
 			enemyCharacter.input_movement = direction
 			enemyCharacter.position = enemyCharacter.position + direction*delta*enemyCharacter.speed
 	
-	generateTerrain()		
+	if($Map.get_child_count() == 0):
+		return
+	$Map.get_child(0).playerCoords = playerPosition
+	#generateTerrain()		
 
 func generateTerrain() -> void:
 	if($Player.get_child_count() == 0):
@@ -63,15 +66,20 @@ func generateTerrain() -> void:
 	
 	
 func _on_main_menu_start_game() -> void:
-	var screen_size = get_viewport().get_visible_rect().size
-	var startPlayerPosition = screen_size/2
-	var chunk = mapScene.instantiate()
-	$Map.add_child(chunk)
 	
 	var player = playerScene.instantiate()
 	$Player.add_child(player)
 	
+	var screen_size = get_viewport().get_visible_rect().size
+	var startPlayerPosition = screen_size/2
 	player.get_node("CharacterBody2D").position = startPlayerPosition
+	
+	var chunk = mapScene.instantiate()
+	$Map.add_child(chunk)
+	chunk.playerCoords = startPlayerPosition
+	chunk.mapCenter = startPlayerPosition
+	chunk.playState = true
+	
 	$MobSpawnTimer.start()
 
 func _on_mob_spawn_timer_timeout() -> void:
