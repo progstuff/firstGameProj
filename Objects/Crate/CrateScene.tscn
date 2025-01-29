@@ -1,0 +1,82 @@
+[gd_scene load_steps=8 format=3 uid="uid://knoqo5kygnos"]
+
+[ext_resource type="Script" path="res://Objects/Crate/CrateScript.gd" id="1_040b0"]
+[ext_resource type="Texture2D" uid="uid://beos4w2aw4uay" path="res://Objects/Crate/Crate-animated.png" id="2_box8w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_myj02"]
+size = Vector2(14, 13)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i5cus"]
+size = Vector2(16, 17)
+
+[sub_resource type="Animation" id="Animation_srxe4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_jvhy1"]
+resource_name = "destroy"
+length = 0.67
+step = 0.06
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06, 0.12, 0.18, 0.24, 0.3, 0.36, 0.42, 0.48, 0.54, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6tsma"]
+_data = {
+"RESET": SubResource("Animation_srxe4"),
+"destroy": SubResource("Animation_jvhy1")
+}
+
+[node name="StaticBody2D" type="StaticBody2D"]
+light_mask = 8
+visibility_layer = 5
+script = ExtResource("1_040b0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_myj02")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_box8w")
+hframes = 11
+frame = 1
+
+[node name="Area2D" type="Area2D" parent="."]
+light_mask = 8
+visibility_layer = 5
+collision_layer = 8
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+light_mask = 8
+visibility_layer = 5
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_i5cus")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_6tsma")
+}
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

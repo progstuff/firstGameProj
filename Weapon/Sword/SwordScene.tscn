@@ -172,7 +172,7 @@ script = ExtResource("1_lsqwb")
 
 [node name="sword" type="Area2D" parent="." groups=["weapon"]]
 collision_layer = 4
-collision_mask = 2
+collision_mask = 10
 
 [node name="SwordUpShape" type="CollisionShape2D" parent="sword"]
 position = Vector2(0, -29.5)

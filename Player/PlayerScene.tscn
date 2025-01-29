@@ -252,6 +252,7 @@ frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 physics_interpolation_mode = 2
+light_mask = 9
 visibility_layer = 2
 shape = SubResource("RectangleShape2D_u162p")
 one_way_collision_margin = 0.0
@@ -274,7 +275,7 @@ wait_time = 0.1
 [node name="SwordScene" parent="CharacterBody2D" instance=ExtResource("3_sj6u4")]
 visible = false
 light_mask = 4
-visibility_layer = 2
+visibility_layer = 10
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
 zoom = Vector2(1.5, 1.5)

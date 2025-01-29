@@ -2,11 +2,8 @@ extends Node2D
 var enemyScene = load("res://Enemy/EnemyScene.tscn")
 var playerScene = load("res://Player/PlayerScene.tscn")
 var mapScene = load("res://Map/MapScene.tscn")
-
-var CHUNK_HEIGHT = 40 * 16
-var CHUNK_WIDTH = 72 * 16
-var tileMap = {Vector2(0, 0): true}
-
+var crateScene = load("res://Objects/Crate/CrateScene.tscn")
+var coinScene = load("res://Objects/Coin/CoinScene.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -22,6 +19,10 @@ func _process(delta: float) -> void:
 	for enemy in enemies:
 		var enemyCharacter = enemy.get_node("CharacterBody2D")
 		if(enemyCharacter.live == 0):
+			var coin = coinScene.instantiate()
+			coin.position = enemyCharacter.position
+			$Coins.add_child(coin)
+			
 			$Mobs.remove_child(enemy)
 			enemy.queue_free()
 		else:
@@ -38,50 +39,53 @@ func _process(delta: float) -> void:
 			enemyCharacter.input_movement = direction
 			enemyCharacter.position = enemyCharacter.position + direction*delta*enemyCharacter.speed
 	
+	var objects = $Crates.get_children()
+	for object in objects:
+		if(object.live == 0):
+			if(object.name == "crate"):
+				var coin = coinScene.instantiate()
+				coin.position = object.position
+				$Coins.add_child(coin)
+			$Crates.remove_child(object)
+			object.queue_free()
+			
+	var coins = $Coins.get_children()
+	for coin in coins:
+		if(coin.collected):
+			$Coins.remove_child(coin)
+			coin.queue_free()
+					
 	if($Map.get_child_count() == 0):
 		return
 	$Map.get_child(0).playerCoords = playerPosition
-	#generateTerrain()		
-
-func generateTerrain() -> void:
-	if($Player.get_child_count() == 0):
-		return
-		
-	var player = $Player.get_child(0)
-	var playerPosition = player.get_node("CharacterBody2D").position
-	
-	playerPosition = playerPosition + Vector2(200, -200);
-	
-	var x = floor(playerPosition.x / CHUNK_WIDTH)
-	var y = floor(playerPosition.y / CHUNK_HEIGHT)
-	var chunkCoord = Vector2(x, y)
-	
-	if(!tileMap.has(chunkCoord)):
-		var chunk = mapScene.instantiate()
-		chunk.position.x = x * CHUNK_WIDTH
-		chunk.position.y = y * CHUNK_HEIGHT
-		$Map.add_child(chunk)
-		tileMap[chunkCoord] = true
-		
-	
 	
 func _on_main_menu_start_game() -> void:
 	
 	var player = playerScene.instantiate()
-	$Player.add_child(player)
-	
 	var screen_size = get_viewport().get_visible_rect().size
 	var startPlayerPosition = screen_size/2
 	player.get_node("CharacterBody2D").position = startPlayerPosition
+	$Player.add_child(player)
 	
-	var chunk = mapScene.instantiate()
-	$Map.add_child(chunk)
-	chunk.playerCoords = startPlayerPosition
-	chunk.mapCenter = startPlayerPosition
-	chunk.playState = true
+	var landscape = mapScene.instantiate()
+	landscape.playerCoords = startPlayerPosition
+	landscape.mapCenter = startPlayerPosition
+	landscape.playState = true
+	$Map.add_child(landscape)
+	
+	generateCrates()
 	
 	$MobSpawnTimer.start()
 
+func generateCrates() -> void:
+	var rand = RandomNumberGenerator.new()
+	for i in range(1, 3):
+		var crate = crateScene.instantiate()
+		var x = rand.randi_range(0, 1000);
+		var y = rand.randi_range(-300, 300);
+		crate.position = Vector2(x, y)
+		$Crates.add_child(crate)
+		
 func _on_mob_spawn_timer_timeout() -> void:
 	if($Player.get_child_count() == 0):
 		return

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://clf77pvuvpr6c"]
+[gd_scene load_steps=4 format=3 uid="uid://clf77pvuvpr6c"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_4ebhd"]
 [ext_resource type="PackedScene" uid="uid://w5kbguyafcqp" path="res://GUI/MainMenu.tscn" id="2_yt8pu"]
+[ext_resource type="PackedScene" uid="uid://knoqo5kygnos" path="res://Objects/Crate/CrateScene.tscn" id="3_b6lc2"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_4ebhd")
@@ -29,6 +30,12 @@ z_index = -1
 
 [node name="DebugTimer" type="Timer" parent="."]
 autostart = true
+
+[node name="StaticBody2D" parent="." instance=ExtResource("3_b6lc2")]
+
+[node name="Crates" type="Node" parent="."]
+
+[node name="Coins" type="Node" parent="."]
 
 [connection signal="timeout" from="MobSpawnTimer" to="." method="_on_mob_spawn_timer_timeout"]
 [connection signal="startGame" from="MainMenu" to="." method="_on_main_menu_start_game"]
