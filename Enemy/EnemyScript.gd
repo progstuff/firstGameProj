@@ -1,5 +1,8 @@
 extends CharacterBody2D
+@onready var player = $"../../Player"
+var coinScene = load("res://Objects/Coin/CoinScene.tscn")
 
+@export var typeName = "enemy"
 @export var input_movement = Vector2.ZERO
 @export var speed = 1
 @export var live = 1
@@ -16,32 +19,54 @@ func _physics_process(_delta: float) -> void:
 	
 	match current_state:
 		states.MOVE:
-			move()
+			move(_delta)
 		states.DEAD:
 			dead()
+	
+	
 			
 func dead() -> void:
 	anim_state.travel("Dead")
 	
-func move() -> void:
+func move(delta: float) -> void:
 	
 	if(live > 0):
+		changePosition(delta)
+		
 		if input_movement != Vector2.ZERO:
 			anim_tree.set("parameters/Idle/blend_position", input_movement)
 			anim_tree.set("parameters/Walk/blend_position", input_movement)
 			anim_tree.set("parameters/Dead/blend_position", input_movement)
 			anim_state.travel("Walk")
-		
+			
 		if input_movement == Vector2.ZERO:
 			anim_state.travel("Idle")
 		
 		move_and_slide()
 
+func changePosition(delta: float):
+	var enemyPosition = position
+	var playerPosition = player.get_child(0).get_node("CharacterBody2D").position
+	var direction = enemyPosition.direction_to(playerPosition)
+	
+	if((enemyPosition - playerPosition).length() < 3):
+		direction = Vector2.ZERO
+	if(live <= 0):
+		direction = Vector2.ZERO
+
+	direction = direction.normalized()
+	
+	input_movement = direction
+	position = position + direction*speed*delta
+	
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	if(area.name == "sword"):
-		live = -1
 		$Sprite2D.visible = false
 		current_state = states.DEAD
 		
 func erase() -> void:
-	live = 0
+	var coin = coinScene.instantiate()
+	coin.position = position
+	get_parent().get_parent().add_child(coin)
+	get_parent().queue_free()
+	

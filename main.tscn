@@ -10,8 +10,6 @@ script = ExtResource("1_4ebhd")
 [node name="MobSpawnTimer" type="Timer" parent="."]
 wait_time = 3.0
 
-[node name="Mobs" type="Node" parent="."]
-
 [node name="Player" type="Node" parent="."]
 
 [node name="MainMenu" parent="." instance=ExtResource("2_yt8pu")]
@@ -33,10 +31,8 @@ autostart = true
 
 [node name="StaticBody2D" parent="." instance=ExtResource("3_b6lc2")]
 
-[node name="Crates" type="Node" parent="."]
-
-[node name="Coins" type="Node" parent="."]
-
+[connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
+[connection signal="child_exiting_tree" from="." to="." method="_on_child_exiting_tree"]
 [connection signal="timeout" from="MobSpawnTimer" to="." method="_on_mob_spawn_timer_timeout"]
 [connection signal="startGame" from="MainMenu" to="." method="_on_main_menu_start_game"]
 [connection signal="timeout" from="DebugTimer" to="." method="_on_debug_timer_timeout"]
