@@ -1,5 +1,8 @@
 extends CharacterBody2D
-@onready var player = $"../../Player"
+
+class_name EnemyClass
+
+@onready var player = $"../Player"
 var coinScene = load("res://Objects/Coin/CoinScene.tscn")
 
 @export var typeName = "enemy"
@@ -58,15 +61,15 @@ func changePosition(delta: float):
 	
 	input_movement = direction
 	position = position + direction*speed*delta
-	
-func _on_area_2d_area_entered(area: Area2D) -> void:
-	if(area.name == "sword"):
-		$Sprite2D.visible = false
-		current_state = states.DEAD
 		
 func erase() -> void:
 	var coin = coinScene.instantiate()
 	coin.position = position
-	get_parent().get_parent().add_child(coin)
-	get_parent().queue_free()
-	
+	get_parent().add_child(coin)
+	queue_free()
+
+func _on_enemy_area_entered(area: Area2D) -> void:
+	if(area.name == "sword"):
+		$Sprite2D.visible = false
+		$DeathSprites.visible = true
+		current_state = states.DEAD

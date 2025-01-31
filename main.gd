@@ -1,5 +1,7 @@
 extends Node2D
 var enemyScene = load("res://Enemy/EnemyScene.tscn")
+var firstEnemyScene = load("res://Enemy/FirstEnemyScene.tscn")
+var enemiesTypes = [enemyScene, firstEnemyScene]
 var playerScene = load("res://Player/PlayerScene.tscn")
 var mapScene = load("res://Map/MapScene.tscn")
 var crateScene = load("res://Objects/Crate/CrateScene.tscn")
@@ -62,7 +64,8 @@ func _on_mob_spawn_timer_timeout() -> void:
 		
 		var enemiesCount = rand.randi_range(30, 50)
 		for i in range(0,enemiesCount):
-			var enemyObject = enemyScene.instantiate()
+			var enemyTypeInd = rand.randi_range(0, 1)
+			var enemyObject = enemiesTypes[enemyTypeInd].instantiate()
 			
 			rand.randomize()
 			var x = rand.randf_range(0, screen_size.x) + playerPosition.x - screen_size.x/2
@@ -70,10 +73,9 @@ func _on_mob_spawn_timer_timeout() -> void:
 			var y = rand.randf_range(0, screen_size.y) + playerPosition.y - screen_size.y/2
 			var randomPos = Vector2(x,y)
 			
-			enemyObject.get_node("CharacterBody2D").position = randomPos
-			enemyObject.get_node("CharacterBody2D").speed = rand.randi_range(50, 160)
+			enemyObject.position = randomPos
+			enemyObject.speed = rand.randi_range(50, 160)
 			add_child(enemyObject)
-
 
 func _on_debug_timer_timeout() -> void:
 	if($Player.get_child_count() == 0):
@@ -85,13 +87,9 @@ func _on_debug_timer_timeout() -> void:
 	print(mobsCnt)
 
 func _on_child_entered_tree(node: Node) -> void:
-	if(node.has_node("CharacterBody2D")):
-		var el = node.get_node("CharacterBody2D")
-		if(el.has_node("enemy")):
-			mobsCnt += 1
-
+	if(node.has_node("enemy")):
+		mobsCnt += 1
+		
 func _on_child_exiting_tree(node: Node) -> void:
-	if(node.has_node("CharacterBody2D")):
-		var el = node.get_node("CharacterBody2D")
-		if(el.has_node("enemy")):
-			mobsCnt -= 1
+	if(node.has_node("enemy")):
+		mobsCnt -= 1
