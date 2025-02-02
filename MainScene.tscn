@@ -7,7 +7,7 @@
 script = ExtResource("1_320vk")
 
 [node name="MobSpawnTimer" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 2.0
 
 [node name="Player" type="Node" parent="."]
 

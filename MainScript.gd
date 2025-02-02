@@ -75,7 +75,8 @@ func _on_mob_spawn_timer_timeout() -> void:
 			var randomPos = Vector2(x,y)
 			
 			enemyObject.position = randomPos
-			enemyObject.speed = rand.randi_range(50, 160)
+			enemyObject.rageSpeed = rand.randi_range(50, 160)
+			enemyObject.walkSpeed = rand.randi_range(15, 30)
 			add_child(enemyObject)
 
 func _on_debug_timer_timeout() -> void:
