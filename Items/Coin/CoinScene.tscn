@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3 uid="uid://ceq3txalmv7tl"]
+
+[ext_resource type="Script" path="res://Items/Coin/CoinScript.gd" id="1_hyvm4"]
+[ext_resource type="PackedScene" uid="uid://dbm76a2s3vrt3" path="res://Items/ItemScene.tscn" id="1_qq08k"]
+[ext_resource type="Texture2D" uid="uid://cq7npvo6f4uot" path="res://Items/Coin/Coin.png" id="3_xusxh"]
+
+[node name="CoinScene" instance=ExtResource("1_qq08k")]
+script = ExtResource("1_hyvm4")
+
+[node name="Sprite2D" parent="." index="2"]
+texture = ExtResource("3_xusxh")

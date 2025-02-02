@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://knoqo5kygnos"]
 
-[ext_resource type="Script" path="res://Objects/Crate/CrateScript.gd" id="1_040b0"]
-[ext_resource type="Texture2D" uid="uid://beos4w2aw4uay" path="res://Objects/Crate/Crate-animated.png" id="2_box8w"]
+[ext_resource type="Script" path="res://InteracteObjects/Crate/CrateScript.gd" id="1_040b0"]
+[ext_resource type="Texture2D" uid="uid://beos4w2aw4uay" path="res://InteracteObjects/Crate/Crate-animated.png" id="2_box8w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_myj02"]
 size = Vector2(14, 13)

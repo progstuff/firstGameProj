@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ceom0qello8t1"
-path="res://.godot/imported/coin.png-880c134b1a13c52eb105d6ca54895aa2.ctex"
+uid="uid://8tsyypmwba7c"
+path="res://.godot/imported/DeathSprites.png-2e3e8b0a6d2b2297431c0732e59f2917.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Objects/Coin/coin.png"
-dest_files=["res://.godot/imported/coin.png-880c134b1a13c52eb105d6ca54895aa2.ctex"]
+source_file="res://DeathSprites.png"
+dest_files=["res://.godot/imported/DeathSprites.png-2e3e8b0a6d2b2297431c0732e59f2917.ctex"]
 
 [params]
 

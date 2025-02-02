@@ -1,4 +1,7 @@
 extends CharacterBody2D
+class_name Player
+
+@export var score = 0
 
 @onready var anim_state = $AnimationTree.get("parameters/playback")
 @onready var anim_tree = $AnimationTree
@@ -13,7 +16,6 @@ var currentPlayerSpeed = walkSpeed
 
 func _ready() -> void:
 	motion_mode = MOTION_MODE_FLOATING
-	$SwordScene.visible = true
 	
 func _physics_process(_delta: float) -> void:
 	move()
@@ -50,3 +52,6 @@ func _on_timer_timeout() -> void:
 func _on_player_area_entered(area: Area2D) -> void:
 	if(area.name == "enemy"):
 		pass
+	elif(area.name == "item"):
+		score +=1 
+		area.get_parent().queue_free()

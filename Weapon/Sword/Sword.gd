@@ -8,8 +8,8 @@ func init() -> void:
 	$sword/SwordDnShape.disabled = true
 	$sword/AttackTimer.start()
 
-func _on_draw() -> void:
-	init()
-
 func _on_attack_timer_timeout() -> void:
 	$sword/AnimationSword.play("sword")
+
+func _on_draw() -> void:
+	init()

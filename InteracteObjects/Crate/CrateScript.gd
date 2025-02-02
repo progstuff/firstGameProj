@@ -1,6 +1,6 @@
 extends StaticBody2D
 
-var coinScene = load("res://Objects/Coin/CoinScene.tscn")
+var coinScene = load("res://Items/Coin/CoinScene.tscn")
 @export var live = 1
 
 # Called when the node enters the scene tree for the first time.

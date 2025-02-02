@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bep2ahg8yjbgx"
-path="res://.godot/imported/DeathSprites.png-82e29fa5bfe1282df3c6d296c3ee27fe.ctex"
+uid="uid://beos4w2aw4uay"
+path="res://.godot/imported/Crate-animated.png-a411eb5af66d53036724cc8ef3908a06.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Enemy/DeathSprites.png"
-dest_files=["res://.godot/imported/DeathSprites.png-82e29fa5bfe1282df3c6d296c3ee27fe.ctex"]
+source_file="res://InteracteObjects/Crate/Crate-animated.png"
+dest_files=["res://.godot/imported/Crate-animated.png-a411eb5af66d53036724cc8ef3908a06.ctex"]
 
 [params]
 

@@ -204,4 +204,5 @@ libraries = {
 "": SubResource("AnimationLibrary_ploog")
 }
 
+[connection signal="draw" from="." to="." method="_on_draw"]
 [connection signal="timeout" from="sword/AttackTimer" to="." method="_on_attack_timer_timeout"]

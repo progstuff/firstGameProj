@@ -1,10 +1,11 @@
 extends Node2D
-var enemyScene = load("res://Enemy/EnemyScene.tscn")
-var firstEnemyScene = load("res://Enemy/FirstEnemyScene.tscn")
-var enemiesTypes = [enemyScene, firstEnemyScene]
-var playerScene = load("res://Player/PlayerScene.tscn")
+
+var firstEnemyTypeScene = load("res://Enemy/EnemyFirstType/EnemyFirstTypeScene.tscn")
+var secondEnemyTypeScene = load("res://Enemy/EnemySecondType/EnemySecondTypeScene.tscn")
+var enemiesTypes = [firstEnemyTypeScene, secondEnemyTypeScene]
+var playerScene = load("res://Player/PlayerOneType/PlayerOneTypeScene.tscn")
 var mapScene = load("res://Map/MapScene.tscn")
-var crateScene = load("res://Objects/Crate/CrateScene.tscn")
+var crateScene = load("res://InteracteObjects/Crate/CrateScene.tscn")
 
 var mobsCnt = 0
 # Called when the node enters the scene tree for the first time.
@@ -17,7 +18,7 @@ func _process(_delta: float) -> void:
 		return
 		
 	var player = $Player.get_child(0)
-	var playerPosition = player.get_node("CharacterBody2D").position
+	var playerPosition = player.position
 					
 	if($Map.get_child_count() == 0):
 		return
@@ -29,7 +30,7 @@ func _on_main_menu_start_game() -> void:
 	var player = playerScene.instantiate()
 	var screen_size = get_viewport().get_visible_rect().size
 	var startPlayerPosition = screen_size/2
-	player.get_node("CharacterBody2D").position = startPlayerPosition
+	player.position = startPlayerPosition
 	$Player.add_child(player)
 	
 	var landscape = mapScene.instantiate()
@@ -57,7 +58,7 @@ func _on_mob_spawn_timer_timeout() -> void:
 	
 	if(mobsCnt <= 50):
 		var player = $Player.get_child(0)
-		var playerPosition = player.get_node("CharacterBody2D").position
+		var playerPosition = player.position
 		
 		var rand = RandomNumberGenerator.new()
 		var screen_size = get_viewport().get_visible_rect().size
@@ -82,9 +83,9 @@ func _on_debug_timer_timeout() -> void:
 		return
 		
 	var player = $Player.get_child(0)
-	var playerPosition = player.get_node("CharacterBody2D").position
+	var playerPosition = player.position
 	
-	print(mobsCnt)
+	print(player.score)
 
 func _on_child_entered_tree(node: Node) -> void:
 	if(node.has_node("enemy")):

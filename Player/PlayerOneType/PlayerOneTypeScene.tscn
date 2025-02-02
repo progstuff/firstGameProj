@@ -1,0 +1,14 @@
+[gd_scene load_steps=5 format=3 uid="uid://bvovoiisnmght"]
+
+[ext_resource type="PackedScene" uid="uid://d22mg64hermqi" path="res://Player/PlayerScene.tscn" id="1_knf8u"]
+[ext_resource type="Script" path="res://Player/PlayerOneType/PlayerOneTypeScript.gd" id="2_gnc4c"]
+[ext_resource type="Texture2D" uid="uid://dx4y3imgpq2ff" path="res://Player/PlayerOneType/PlayerOneType.png" id="3_cyav3"]
+[ext_resource type="PackedScene" uid="uid://coe1q8ioluayu" path="res://Weapon/Sword/SwordScene.tscn" id="4_lgyry"]
+
+[node name="PlayerOneTypeScene" instance=ExtResource("1_knf8u")]
+script = ExtResource("2_gnc4c")
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("3_cyav3")
+
+[node name="SwordScene" parent="." index="7" instance=ExtResource("4_lgyry")]

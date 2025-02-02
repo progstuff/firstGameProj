@@ -3,7 +3,7 @@ extends CharacterBody2D
 class_name EnemyClass
 
 @onready var player = $"../Player"
-var coinScene = load("res://Objects/Coin/CoinScene.tscn")
+var coinScene = load("res://Items/Coin/CoinScene.tscn")
 
 @export var typeName = "enemy"
 @export var input_movement = Vector2.ZERO
@@ -49,7 +49,7 @@ func move(delta: float) -> void:
 
 func changePosition(delta: float):
 	var enemyPosition = position
-	var playerPosition = player.get_child(0).get_node("CharacterBody2D").position
+	var playerPosition = player.get_child(0).position
 	var direction = enemyPosition.direction_to(playerPosition)
 	
 	if((enemyPosition - playerPosition).length() < 3):

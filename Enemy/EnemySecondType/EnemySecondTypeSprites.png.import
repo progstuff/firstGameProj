@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://beos4w2aw4uay"
-path="res://.godot/imported/Crate-animated.png-60ba4a345f0478dcdb91a61dfeb7dae7.ctex"
+uid="uid://b35gwrkujsma3"
+path="res://.godot/imported/EnemySecondTypeSprites.png-a58ede8c0fae502c962558b6c77ab4fe.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Objects/Crate/Crate-animated.png"
-dest_files=["res://.godot/imported/Crate-animated.png-60ba4a345f0478dcdb91a61dfeb7dae7.ctex"]
+source_file="res://Enemy/EnemySecondType/EnemySecondTypeSprites.png"
+dest_files=["res://.godot/imported/EnemySecondTypeSprites.png-a58ede8c0fae502c962558b6c77ab4fe.ctex"]
 
 [params]
 

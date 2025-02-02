@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Enemy/EnemyScript.gd" id="1_8ws81"]
 [ext_resource type="Texture2D" uid="uid://sgn4sgtikpm0" path="res://Enemy/EnemySprites.png" id="2_vep1b"]
-[ext_resource type="Texture2D" uid="uid://8tsyypmwba7c" path="res://Enemy/DeathSprites.png" id="3_l67af"]
+[ext_resource type="Texture2D" uid="uid://8tsyypmwba7c" path="res://DeathSprites.png" id="3_l67af"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u162p"]
 size = Vector2(19, 16)
@@ -308,6 +308,7 @@ transitions = ["Idle", "Dead", SubResource("AnimationNodeStateMachineTransition_
 size = Vector2(29, 28)
 
 [node name="EnemyScene" type="CharacterBody2D"]
+z_index = 100
 collision_layer = 2
 script = ExtResource("1_8ws81")
 

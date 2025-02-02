@@ -1,18 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://clf77pvuvpr6c"]
+[gd_scene load_steps=3 format=3 uid="uid://clf77pvuvpr6c"]
 
-[ext_resource type="Script" path="res://main.gd" id="1_4ebhd"]
-[ext_resource type="PackedScene" uid="uid://w5kbguyafcqp" path="res://GUI/MainMenu.tscn" id="2_yt8pu"]
-[ext_resource type="PackedScene" uid="uid://knoqo5kygnos" path="res://Objects/Crate/CrateScene.tscn" id="3_b6lc2"]
+[ext_resource type="Script" path="res://MainScript.gd" id="1_320vk"]
+[ext_resource type="PackedScene" uid="uid://w5kbguyafcqp" path="res://GUI/MainMenu.tscn" id="2_4v00h"]
 
 [node name="Main" type="Node2D"]
-script = ExtResource("1_4ebhd")
+script = ExtResource("1_320vk")
 
 [node name="MobSpawnTimer" type="Timer" parent="."]
 wait_time = 3.0
 
 [node name="Player" type="Node" parent="."]
 
-[node name="MainMenu" parent="." instance=ExtResource("2_yt8pu")]
+[node name="MainMenu" parent="." instance=ExtResource("2_4v00h")]
 anchors_preset = -1
 anchor_left = 0.5
 anchor_right = 0.5
@@ -28,8 +27,6 @@ z_index = -1
 
 [node name="DebugTimer" type="Timer" parent="."]
 autostart = true
-
-[node name="StaticBody2D" parent="." instance=ExtResource("3_b6lc2")]
 
 [connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
 [connection signal="child_exiting_tree" from="." to="." method="_on_child_exiting_tree"]
