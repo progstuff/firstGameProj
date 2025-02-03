@@ -1,0 +1,114 @@
+[gd_scene load_steps=6 format=3 uid="uid://ba4x5167abphj"]
+
+[ext_resource type="Script" path="res://Interface/Interface.gd" id="1_8d7oy"]
+[ext_resource type="Texture2D" uid="uid://cg0yl2nqykrmv" path="res://Interface/empty.png" id="1_pebso"]
+[ext_resource type="Texture2D" uid="uid://cg6epu5ujmxry" path="res://Interface/Coin.png" id="3_x6gw2"]
+[ext_resource type="FontFile" uid="uid://c6pgbrf7qyhdc" path="res://Interface/Planes_ValMore.ttf" id="4_6mcfd"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ucl1e"]
+font = ExtResource("4_6mcfd")
+font_size = 32
+
+[node name="Interface" type="CanvasLayer"]
+script = ExtResource("1_8d7oy")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -575.0
+offset_top = -322.5
+offset_right = 575.0
+offset_bottom = 322.5
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="GridContainer" type="GridContainer" parent="Control"]
+custom_minimum_size = Vector2(320, 32)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+offset_right = 356.0
+offset_bottom = 1.0
+grow_vertical = 0
+columns = 10
+
+[node name="TextureRect" type="TextureRect" parent="Control/GridContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+texture = ExtResource("1_pebso")
+
+[node name="TextureRect2" type="TextureRect" parent="Control/GridContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("1_pebso")
+
+[node name="TextureRect3" type="TextureRect" parent="Control/GridContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("1_pebso")
+
+[node name="TextureRect4" type="TextureRect" parent="Control/GridContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("1_pebso")
+
+[node name="TextureRect5" type="TextureRect" parent="Control/GridContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("1_pebso")
+
+[node name="TextureRect6" type="TextureRect" parent="Control/GridContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("1_pebso")
+
+[node name="TextureRect7" type="TextureRect" parent="Control/GridContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("1_pebso")
+
+[node name="TextureRect8" type="TextureRect" parent="Control/GridContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("1_pebso")
+
+[node name="TextureRect9" type="TextureRect" parent="Control/GridContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("1_pebso")
+
+[node name="TextureRect10" type="TextureRect" parent="Control/GridContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("1_pebso")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+layout_mode = 0
+offset_right = 97.0
+offset_bottom = 27.0
+
+[node name="TextureRect" type="TextureRect" parent="Control/HBoxContainer"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+texture = ExtResource("3_x6gw2")
+expand_mode = 3
+
+[node name="CoinsCounter" type="Label" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("4_6mcfd")
+text = "0
+"
+label_settings = SubResource("LabelSettings_ucl1e")
+horizontal_alignment = 1
+vertical_alignment = 3
+metadata/_edit_use_anchors_ = true

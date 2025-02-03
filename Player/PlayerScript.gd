@@ -55,3 +55,4 @@ func _on_player_area_entered(area: Area2D) -> void:
 	elif(area.name == "item"):
 		score +=1 
 		area.get_parent().queue_free()
+		get_parent().get_parent().get_node("Interface").collectCoin()

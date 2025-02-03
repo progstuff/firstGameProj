@@ -27,6 +27,8 @@ func _process(_delta: float) -> void:
 	
 func _on_main_menu_start_game() -> void:
 	
+	$Interface.visible = true
+	
 	var player = playerScene.instantiate()
 	var screen_size = get_viewport().get_visible_rect().size
 	var startPlayerPosition = screen_size/2
