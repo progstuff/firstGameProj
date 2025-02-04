@@ -1,10 +1,15 @@
 extends CharacterBody2D
 class_name Player
 
-@export var score = 0
+@export var level = 1
+@export var nextLevelExp = 10
+@export var curExp = 0
 
+@export var score = 0
 @onready var anim_state = $AnimationTree.get("parameters/playback")
 @onready var anim_tree = $AnimationTree
+
+var LEVEL_MULTIPLIER = 1.2
 
 enum states {MOVE, IDLE, DEAD, DODGE}
 var current_state = states.MOVE
@@ -16,6 +21,7 @@ var currentPlayerSpeed = walkSpeed
 
 func _ready() -> void:
 	motion_mode = MOTION_MODE_FLOATING
+	get_parent().get_parent().get_node("Interface").levelUp(level, nextLevelExp)
 	
 func _physics_process(_delta: float) -> void:
 	move()
@@ -56,3 +62,14 @@ func _on_player_area_entered(area: Area2D) -> void:
 		score +=1 
 		area.get_parent().queue_free()
 		get_parent().get_parent().get_node("Interface").collectCoin()
+		collectExp()
+
+func collectExp():
+	curExp += 1
+	if(curExp >= nextLevelExp):
+		level+=1
+		curExp = 0
+		nextLevelExp = round(nextLevelExp*LEVEL_MULTIPLIER)
+		get_parent().get_parent().get_node("Interface").levelUp(level, nextLevelExp)
+	else:
+		get_parent().get_parent().get_node("Interface").changeExpereance(curExp)
