@@ -1,0 +1,72 @@
+[gd_scene load_steps=7 format=3 uid="uid://ckhc3g330bvqm"]
+
+[ext_resource type="Script" path="res://Interface/Skills/SkillScript.gd" id="1_jn0p2"]
+[ext_resource type="FontFile" uid="uid://c6pgbrf7qyhdc" path="res://Interface/Planes_ValMore.ttf" id="2_0ivsc"]
+[ext_resource type="Texture2D" uid="uid://bduxd46heex5g" path="res://Interface/empty.png" id="2_ntifu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lmmvl"]
+bg_color = Color(0.238632, 0.0196857, 0.427208, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_3c6ug"]
+font = ExtResource("2_0ivsc")
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_rvb1x"]
+font = ExtResource("2_0ivsc")
+
+[node name="SkillScene" type="MarginContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -16.0
+offset_right = 200.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_jn0p2")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_lmmvl")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="PanelContainer/HBoxContainer/PanelContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_ntifu")
+
+[node name="Level" type="Label" parent="PanelContainer/HBoxContainer/PanelContainer"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "1"
+label_settings = SubResource("LabelSettings_3c6ug")
+
+[node name="Description" type="Label" parent="PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "описание"
+label_settings = SubResource("LabelSettings_rvb1x")
+
+[node name="AnimationTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[connection signal="gui_input" from="PanelContainer/HBoxContainer" to="." method="_on_h_box_container_gui_input"]
+[connection signal="mouse_entered" from="PanelContainer/HBoxContainer" to="." method="_on_h_box_container_mouse_entered"]
+[connection signal="mouse_exited" from="PanelContainer/HBoxContainer" to="." method="_on_h_box_container_mouse_exited"]
+[connection signal="gui_input" from="PanelContainer/HBoxContainer/PanelContainer/Icon" to="." method="_on_icon_gui_input"]
+[connection signal="timeout" from="AnimationTimer" to="." method="_on_timer_timeout"]

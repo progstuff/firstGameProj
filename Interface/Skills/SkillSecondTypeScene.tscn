@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cy8odfo8mp4hf"]
+
+[ext_resource type="PackedScene" uid="uid://ckhc3g330bvqm" path="res://Interface/Skills/SkillScene.tscn" id="1_id7ur"]
+[ext_resource type="Texture2D" uid="uid://7omxyeausiep" path="res://Interface/Skills/Icon_01.png" id="2_b73ne"]
+
+[node name="SkillSecondTypeScene" instance=ExtResource("1_id7ur")]
+
+[node name="Icon" parent="PanelContainer/HBoxContainer/PanelContainer" index="0"]
+texture = ExtResource("2_b73ne")

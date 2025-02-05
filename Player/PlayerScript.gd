@@ -2,7 +2,7 @@ extends CharacterBody2D
 class_name Player
 
 @export var level = 1
-@export var nextLevelExp = 10
+@export var nextLevelExp = 3
 @export var curExp = 0
 
 @export var score = 0
@@ -21,7 +21,9 @@ var currentPlayerSpeed = walkSpeed
 
 func _ready() -> void:
 	motion_mode = MOTION_MODE_FLOATING
-	get_parent().get_parent().get_node("Interface").levelUp(level, nextLevelExp)
+	var interface = get_parent().get_parent().get_node("Interface")
+	interface.levelUp(level, nextLevelExp)
+	var skillsPanel = interface.get_node("SkillsPanelScene")
 	
 func _physics_process(_delta: float) -> void:
 	move()
@@ -65,11 +67,15 @@ func _on_player_area_entered(area: Area2D) -> void:
 		collectExp()
 
 func collectExp():
+	var interface = get_parent().get_parent().get_node("Interface")
+	
 	curExp += 1
 	if(curExp >= nextLevelExp):
 		level+=1
 		curExp = 0
 		nextLevelExp = round(nextLevelExp*LEVEL_MULTIPLIER)
-		get_parent().get_parent().get_node("Interface").levelUp(level, nextLevelExp)
+		
+		interface.levelUp(level, nextLevelExp)
+		interface.showSkillsLvlUpForPlayer()
 	else:
-		get_parent().get_parent().get_node("Interface").changeExpereance(curExp)
+		interface.changeExpereance(curExp)
