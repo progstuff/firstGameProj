@@ -1,12 +1,20 @@
 extends CanvasLayer
 
+var abilityScene = load("res://Interface/SlotScene.tscn")
 var coinsCnt = 0
 
 var skillPanel = {}
+var currentSeconds = 0
 
+func init() -> void:
+	currentSeconds = 0
+	$Control/TimeCounter/Timer.start()
+	visible = true
+	
 func collectCoin() -> void:
 	coinsCnt += 1
-	$Control/HBoxContainer/CoinsCounter.text = str(coinsCnt)
+	var coinsCounterLbl = $Control/CoinsCounterContainer/HBoxContainer/CoinsCounter
+	coinsCounterLbl.text = str(coinsCnt)
 
 func levelUp(level: int, levelExpereance: int):
 	$Control/ExpereanceContainer/Level.text = "Уровень " + str(level)
@@ -21,10 +29,30 @@ func showSkillsLvlUpForPlayer():
 	$SkillsPanelScene.visible = true
 
 func learnSkill(skillInd: int, skillLevel: int, skillIcon: CompressedTexture2D) -> void:
+	var panel = $Control/MarginContainer/AbilityPanel
 	if(!skillPanel.has(skillInd)):
 		var ind = skillPanel.size()
 		skillPanel[skillInd] = [skillLevel, ind]
-		var panel = $Control/MarginContainer/GridContainer
-		panel.get_child(ind).texture = skillIcon
+		var ability = abilityScene.instantiate()
+		ability.setAbility(skillIcon, skillLevel)
+		panel.add_child(ability)
+	else:
+		var ind = skillPanel[skillInd][1]
+		var lvl = skillPanel[skillInd][0]
+		lvl += 1
+		panel.get_child(ind).increaseLevel()
+
+func _on_timer_timeout() -> void:
+	currentSeconds += 1
+	var seconds = currentSeconds % 60
+	var minutes = (currentSeconds - seconds)/60
 	
+	var secStr = str(seconds)
+	if(seconds < 10):
+		secStr = "0" + secStr
+		
+	var minStr = str(minutes)
+	if(minutes < 10):
+		minStr = "0" + minStr
 	
+	$Control/TimeCounter/Time.text = minStr + ":" + secStr

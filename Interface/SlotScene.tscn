@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://cdd0puogv8x4n"]
+
+[ext_resource type="Script" path="res://Interface/SlotScript.gd" id="1_332nu"]
+[ext_resource type="FontFile" uid="uid://c6pgbrf7qyhdc" path="res://Interface/Planes_ValMore.ttf" id="2_3aded"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bw4ji"]
+font = ExtResource("2_3aded")
+outline_size = 8
+outline_color = Color(0.0846899, 0.0846899, 0.0846899, 1)
+
+[node name="SlotScene" type="PanelContainer"]
+custom_minimum_size = Vector2(32, 32)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1120.0
+offset_bottom = -616.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_332nu")
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 2
+
+[node name="Level" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "1"
+label_settings = SubResource("LabelSettings_bw4ji")

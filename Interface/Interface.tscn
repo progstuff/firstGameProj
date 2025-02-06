@@ -1,7 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://ba4x5167abphj"]
 
 [ext_resource type="Script" path="res://Interface/Interface.gd" id="1_8d7oy"]
-[ext_resource type="Texture2D" uid="uid://bduxd46heex5g" path="res://Interface/empty.png" id="1_pebso"]
 [ext_resource type="Texture2D" uid="uid://cg6epu5ujmxry" path="res://Interface/Coin.png" id="3_x6gw2"]
 [ext_resource type="FontFile" uid="uid://c6pgbrf7qyhdc" path="res://Interface/Planes_ValMore.ttf" id="4_6mcfd"]
 [ext_resource type="PackedScene" uid="uid://daj4gw0uy0fo1" path="res://Interface/Skills/SkillsPanelScene.tscn" id="5_86rpb"]
@@ -9,6 +8,7 @@
 [sub_resource type="LabelSettings" id="LabelSettings_ucl1e"]
 font = ExtResource("4_6mcfd")
 font_size = 32
+outline_color = Color(0.680456, 0.0317417, 0.0185539, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_mpnp6"]
 font = ExtResource("4_6mcfd")
@@ -31,6 +31,10 @@ corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
 
+[sub_resource type="LabelSettings" id="LabelSettings_ngrtr"]
+font = ExtResource("4_6mcfd")
+font_size = 32
+
 [node name="Interface" type="CanvasLayer"]
 script = ExtResource("1_8d7oy")
 
@@ -49,26 +53,35 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+[node name="CoinsCounterContainer" type="MarginContainer" parent="Control"]
 layout_mode = 0
-offset_right = 97.0
-offset_bottom = 27.0
+offset_right = 40.0
+offset_bottom = 32.0
+theme_override_constants/margin_top = 5
 
-[node name="TextureRect" type="TextureRect" parent="Control/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/CoinsCounterContainer"]
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/CoinsCounterContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 5
+
+[node name="Coin" type="TextureRect" parent="Control/CoinsCounterContainer/HBoxContainer/MarginContainer"]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 texture = ExtResource("3_x6gw2")
 expand_mode = 3
 
-[node name="CoinsCounter" type="Label" parent="Control/HBoxContainer"]
+[node name="CoinsCounter" type="Label" parent="Control/CoinsCounterContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 8
 theme_override_fonts/font = ExtResource("4_6mcfd")
 text = "0
 "
 label_settings = SubResource("LabelSettings_ucl1e")
 horizontal_alignment = 1
-vertical_alignment = 3
 metadata/_edit_use_anchors_ = true
 
 [node name="ExpereanceContainer" type="VBoxContainer" parent="Control"]
@@ -106,65 +119,35 @@ offset_right = 356.0
 grow_vertical = 0
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_bottom = 10
+metadata/_edit_use_anchors_ = true
 
-[node name="GridContainer" type="GridContainer" parent="Control/MarginContainer"]
+[node name="AbilityPanel" type="GridContainer" parent="Control/MarginContainer"]
 custom_minimum_size = Vector2(320, 32)
 layout_direction = 2
 layout_mode = 2
 columns = 10
 
-[node name="Slot1" type="TextureRect" parent="Control/MarginContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 8
-texture = ExtResource("1_pebso")
+[node name="TimeCounter" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -81.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
 
-[node name="Slot2" type="TextureRect" parent="Control/MarginContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
+[node name="Time" type="Label" parent="Control/TimeCounter"]
 layout_mode = 2
-texture = ExtResource("1_pebso")
+size_flags_vertical = 0
+text = "00:00"
+label_settings = SubResource("LabelSettings_ngrtr")
 
-[node name="Slot3" type="TextureRect" parent="Control/MarginContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-texture = ExtResource("1_pebso")
-
-[node name="Slot4" type="TextureRect" parent="Control/MarginContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-texture = ExtResource("1_pebso")
-
-[node name="Slot5" type="TextureRect" parent="Control/MarginContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-texture = ExtResource("1_pebso")
-
-[node name="Slot6" type="TextureRect" parent="Control/MarginContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-texture = ExtResource("1_pebso")
-
-[node name="Slot7" type="TextureRect" parent="Control/MarginContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-texture = ExtResource("1_pebso")
-
-[node name="Slot8" type="TextureRect" parent="Control/MarginContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-texture = ExtResource("1_pebso")
-
-[node name="Slot9" type="TextureRect" parent="Control/MarginContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-texture = ExtResource("1_pebso")
-
-[node name="Slot10" type="TextureRect" parent="Control/MarginContainer/GridContainer"]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-texture = ExtResource("1_pebso")
+[node name="Timer" type="Timer" parent="Control/TimeCounter"]
 
 [node name="SkillsPanelScene" parent="." instance=ExtResource("5_86rpb")]
 visible = false
 metadata/_edit_use_anchors_ = true
+
+[connection signal="timeout" from="Control/TimeCounter/Timer" to="." method="_on_timer_timeout"]

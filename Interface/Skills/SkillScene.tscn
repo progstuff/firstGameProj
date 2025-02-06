@@ -10,6 +10,8 @@ bg_color = Color(0.238632, 0.0196857, 0.427208, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_3c6ug"]
 font = ExtResource("2_0ivsc")
 font_size = 32
+outline_size = 8
+outline_color = Color(0.00184107, 0.00184107, 0.00184107, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_rvb1x"]
 font = ExtResource("2_0ivsc")
