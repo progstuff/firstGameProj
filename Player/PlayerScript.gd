@@ -2,12 +2,16 @@ extends CharacterBody2D
 class_name Player
 
 @export var level = 1
-@export var nextLevelExp = 3
+@export var nextLevelExp = 20
 @export var curExp = 0
+@export var curHp = 100
+@export var maxHp = 100
 
 @export var score = 0
 @onready var anim_state = $AnimationTree.get("parameters/playback")
 @onready var anim_tree = $AnimationTree
+
+var hpBarShift = Vector2.ZERO
 
 var LEVEL_MULTIPLIER = 1.2
 
@@ -24,12 +28,19 @@ func _ready() -> void:
 	var interface = get_parent().get_parent().get_node("Interface")
 	interface.levelUp(level, nextLevelExp)
 	var skillsPanel = interface.get_node("SkillsPanelScene")
+	$HpBar.value = curHp
+	$HpBar.max_value = maxHp
+	var hpBarSize = $HpBar.get_rect().size
+	var spriteSize = $Sprite2D.get_rect().size * $Sprite2D.scale
+	hpBarShift.y = spriteSize.y/2 + hpBarSize.y
+	hpBarShift.x = hpBarSize.x/2
 	
 func _physics_process(_delta: float) -> void:
 	move()
 			
 func move() -> void:
 	
+	$HpBar.position = $Camera2D.position + Vector2(-hpBarShift.x, hpBarShift.y)
 	input_movement = Input.get_vector("left", "right", "up", "down")
 	
 	if input_movement != Vector2.ZERO:
@@ -59,7 +70,10 @@ func _on_timer_timeout() -> void:
 
 func _on_player_area_entered(area: Area2D) -> void:
 	if(area.name == "enemy"):
-		pass
+		var damage = area.get_parent().getDamage()
+		curHp -= damage
+		$HpBar.value = curHp
+		
 	elif(area.name == "item"):
 		score +=1 
 		area.get_parent().queue_free()

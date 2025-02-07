@@ -10,6 +10,9 @@ var coinScene = load("res://Items/Coin/CoinScene.tscn")
 @export var rageSpeed = 1
 @export var walkSpeed = 25
 @export var live = 1
+@export var min_damage = 10
+@export var max_damage = 20
+
 @onready var anim_state = $AnimationTree.get("parameters/playback")
 @onready var anim_tree = $AnimationTree
 
@@ -103,9 +106,11 @@ func _on_enemy_area_entered(area: Area2D) -> void:
 		$DeathSprites.visible = true
 		currentState = states.DEAD
 
-
 func _on_raged(enemyPosition: Vector2) -> void:
 	if(currentState == states.MOVE):
 		var distance = (position - enemyPosition).length()
 		if(distance <= 300):
 			currentState = states.RAGE
+
+func getDamage() -> int:
+	return randi_range(min_damage, max_damage)
