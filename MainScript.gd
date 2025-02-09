@@ -58,7 +58,7 @@ func _on_mob_spawn_timer_timeout() -> void:
 	if($Player.get_child_count() == 0):
 		return
 	
-	if(mobsCnt <= 50):
+	if(mobsCnt <= 100):
 		var player = $Player.get_child(0)
 		var playerPosition = player.position
 		
@@ -70,15 +70,14 @@ func _on_mob_spawn_timer_timeout() -> void:
 			var enemyTypeInd = rand.randi_range(0, 1)
 			var enemyObject = enemiesTypes[enemyTypeInd].instantiate()
 			
-			rand.randomize()
-			var x = rand.randf_range(0, screen_size.x) + playerPosition.x - screen_size.x/2
-			rand.randomize()
-			var y = rand.randf_range(0, screen_size.y) + playerPosition.y - screen_size.y/2
-			var randomPos = Vector2(x,y)
+			
+			var degree = randf_range(0, 2*PI)
+			var distance = randf_range(500, 900)
+			var x = distance * cos(degree)
+			var y = distance * sin(degree)
+			var randomPos = Vector2(x,y) + playerPosition
 			
 			enemyObject.position = randomPos
-			enemyObject.rageSpeed = rand.randi_range(50, 160)
-			enemyObject.walkSpeed = rand.randi_range(15, 30)
 			add_child(enemyObject)
 
 func _on_debug_timer_timeout() -> void:

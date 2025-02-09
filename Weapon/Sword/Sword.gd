@@ -1,5 +1,5 @@
 extends Node2D
-var collisionsCnt = 0
+@export var damage = 10
 
 func init() -> void:
 	$sword/SwordDn.visible = false
@@ -11,5 +11,8 @@ func init() -> void:
 func _on_attack_timer_timeout() -> void:
 	$sword/AnimationSword.play("sword")
 
+func getDamage() -> int:
+	return damage
+	
 func _on_draw() -> void:
 	init()

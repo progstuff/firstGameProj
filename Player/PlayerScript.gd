@@ -20,7 +20,7 @@ var current_state = states.MOVE
 
 var input_movement = Vector2.ZERO
 var walkSpeed = 70
-var shiftSpeed = walkSpeed*6
+var shiftSpeed = walkSpeed*12
 var currentPlayerSpeed = walkSpeed
 
 func _ready() -> void:
@@ -33,14 +33,14 @@ func _ready() -> void:
 	var hpBarSize = $HpBar.get_rect().size
 	var spriteSize = $Sprite2D.get_rect().size * $Sprite2D.scale
 	hpBarShift.y = spriteSize.y/2 + hpBarSize.y
-	hpBarShift.x = hpBarSize.x/2
+	hpBarShift.x = -hpBarSize.x/2
+	$HpBar.position = hpBarShift
 	
 func _physics_process(_delta: float) -> void:
 	move()
 			
 func move() -> void:
 	
-	$HpBar.position = $Camera2D.position + Vector2(-hpBarShift.x, hpBarShift.y)
 	input_movement = Input.get_vector("left", "right", "up", "down")
 	
 	if input_movement != Vector2.ZERO:
@@ -70,9 +70,10 @@ func _on_timer_timeout() -> void:
 
 func _on_player_area_entered(area: Area2D) -> void:
 	if(area.name == "enemy"):
-		var damage = area.get_parent().getDamage()
-		curHp -= damage
-		$HpBar.value = curHp
+		if(current_state != states.DODGE):
+			var damage = area.get_parent().getDamage()
+			curHp -= damage
+			$HpBar.value = curHp
 		
 	elif(area.name == "item"):
 		score +=1 

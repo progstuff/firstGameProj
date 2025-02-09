@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://b2fj14ljjv71w"]
+[gd_scene load_steps=41 format=3 uid="uid://b2fj14ljjv71w"]
 
 [ext_resource type="Script" path="res://Enemy/EnemyScript.gd" id="1_8ws81"]
 [ext_resource type="Texture2D" uid="uid://sgn4sgtikpm0" path="res://Enemy/EnemySprites.png" id="2_vep1b"]
@@ -307,6 +307,15 @@ transitions = ["Idle", "Dead", SubResource("AnimationNodeStateMachineTransition_
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6faqu"]
 size = Vector2(29, 28)
 
+[sub_resource type="Theme" id="Theme_yfhrd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ahul"]
+bg_color = Color(0, 0, 0, 1)
+border_color = Color(0.958246, 0.78117, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q76ou"]
+bg_color = Color(0.795185, 0.0447445, 0.0250159, 1)
+
 [node name="EnemyScene" type="CharacterBody2D"]
 z_index = 100
 collision_layer = 2
@@ -349,5 +358,16 @@ visible = false
 texture = ExtResource("3_l67af")
 hframes = 7
 frame = 1
+
+[node name="HpBar" type="ProgressBar" parent="."]
+offset_left = -13.0
+offset_top = 15.0
+offset_right = 13.0
+offset_bottom = 18.0
+theme = SubResource("Theme_yfhrd")
+theme_override_styles/background = SubResource("StyleBoxFlat_8ahul")
+theme_override_styles/fill = SubResource("StyleBoxFlat_q76ou")
+value = 50.0
+show_percentage = false
 
 [connection signal="area_entered" from="enemy" to="." method="_on_enemy_area_entered"]

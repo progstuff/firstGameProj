@@ -6,6 +6,8 @@
 
 [node name="EnemyFirstTypeScene" instance=ExtResource("1_i7cbk")]
 script = ExtResource("2_dsd8x")
+curHp = 20
+maxHp = 20
 min_damage = 40
 max_damage = 60
 

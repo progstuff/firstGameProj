@@ -9,21 +9,34 @@ var coinScene = load("res://Items/Coin/CoinScene.tscn")
 @export var input_movement = Vector2.ZERO
 @export var rageSpeed = 1
 @export var walkSpeed = 25
-@export var live = 1
+@export var curHp = 100
+@export var maxHp = 100
 @export var min_damage = 10
 @export var max_damage = 20
 
 @onready var anim_state = $AnimationTree.get("parameters/playback")
 @onready var anim_tree = $AnimationTree
 
+var hpBarShift = Vector2.ZERO
+
 enum states {MOVE, RAGE, IDLE, DEAD}
-var currentState = states.MOVE
+var currentState = states.RAGE
 
 var patruleDistance = 200
 var centerPoint = Vector2.ZERO
 
 func _ready() -> void:
 	motion_mode = MOTION_MODE_FLOATING
+	$HpBar.value = curHp
+	$HpBar.max_value = maxHp
+	var hpBarSize = $HpBar.get_rect().size
+	var spriteSize = $Sprite2D.get_rect().size * $Sprite2D.scale
+	hpBarShift.y = spriteSize.y/2 + hpBarSize.y
+	hpBarShift.x = -hpBarSize.x/2
+	$HpBar.position = hpBarShift
+	
+	rageSpeed = randi_range(20, 64)
+	walkSpeed = randi_range(10, 20)
 	
 func _physics_process(_delta: float) -> void:
 	
@@ -40,7 +53,7 @@ func dead() -> void:
 	
 func move(delta: float) -> void:
 	
-	if(live > 0):
+	if(curHp > 0):
 		
 		changePosition(delta)
 		
@@ -62,21 +75,21 @@ func changePosition(delta: float):
 	if(direction == Vector2.ZERO):
 		direction = Vector2(randf_range(-1, 1), randf_range(-1, 1))
 	
-	if(live <= 0):
+	if(curHp <= 0):
 		direction = Vector2.ZERO
 	else:
 		var distance = (position - playerPosition).length()
 
-		if(distance <= 100):
-			currentState = states.RAGE
-		elif(distance >= 150):
-			if(currentState == states.RAGE):
-				currentState = states.MOVE
-				centerPoint = position
-			elif(currentState == states.MOVE):
-				if(centerPoint == Vector2.ZERO):
-					centerPoint = position
-					direction = Vector2(randf_range(-1, 1), randf_range(-1, 1))
+		#if(distance <= 100):
+		#	currentState = states.RAGE
+		#elif(distance >= 150):
+		#	if(currentState == states.RAGE):
+		#		currentState = states.MOVE
+		#		centerPoint = position
+		#	elif(currentState == states.MOVE):
+		#		if(centerPoint == Vector2.ZERO):
+		#			centerPoint = position
+		#			direction = Vector2(randf_range(-1, 1), randf_range(-1, 1))
 	
 	if(currentState == states.RAGE):
 		direction = position.direction_to(playerPosition)
@@ -102,9 +115,15 @@ func erase() -> void:
 
 func _on_enemy_area_entered(area: Area2D) -> void:
 	if(area.name == "sword"):
-		$Sprite2D.visible = false
-		$DeathSprites.visible = true
-		currentState = states.DEAD
+		var damage = area.get_parent().getDamage()
+		curHp -= damage
+		$HpBar.value = curHp
+		
+		if(curHp <= 0):
+			$Sprite2D.visible = false
+			$HpBar.visible = false
+			$DeathSprites.visible = true
+			currentState = states.DEAD
 
 func _on_raged(enemyPosition: Vector2) -> void:
 	if(currentState == states.MOVE):

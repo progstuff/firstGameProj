@@ -6,6 +6,8 @@
 
 [node name="EnemySecondTypeScene" instance=ExtResource("1_w635k")]
 script = ExtResource("2_yhwfk")
+curHp = 10
+maxHp = 10
 
 [node name="Sprite2D" parent="." index="0"]
 texture = ExtResource("3_mv8e1")
