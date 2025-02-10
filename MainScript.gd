@@ -14,16 +14,16 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	if($Player.get_child_count() == 0):
+	if($GameScene/Player.get_child_count() == 0):
 		return
 		
-	var player = $Player.get_child(0)
+	var player = $GameScene/Player.get_child(0)
 	var playerPosition = player.position
 					
-	if($Map.get_child_count() == 0):
+	if($GameScene/Map.get_child_count() == 0):
 		return
 		
-	$Map.get_child(0).playerCoords = playerPosition
+	$GameScene/Map.get_child(0).playerCoords = playerPosition
 	
 func _on_main_menu_start_game() -> void:
 	
@@ -33,41 +33,37 @@ func _on_main_menu_start_game() -> void:
 	var screen_size = get_viewport().get_visible_rect().size
 	var startPlayerPosition = screen_size/2
 	player.position = startPlayerPosition
-	$Player.add_child(player)
+	$GameScene/Player.add_child(player)
 	
 	var landscape = mapScene.instantiate()
 	landscape.playerCoords = startPlayerPosition
 	landscape.mapCenter = startPlayerPosition
 	landscape.playState = true
-	$Map.add_child(landscape)
+	$GameScene/Map.add_child(landscape)
 	
 	generateCrates()
 	
-	$MobSpawnTimer.start()
+	$GameScene/MobSpawnTimer.start()
 
 func generateCrates() -> void:
-	var rand = RandomNumberGenerator.new()
 	for i in range(1, 3):
 		var crate = crateScene.instantiate()
-		var x = rand.randi_range(0, 1000);
-		var y = rand.randi_range(-300, 300);
+		var x = randi_range(0, 1000);
+		var y = randi_range(-300, 300);
 		crate.position = Vector2(x, y)
-		add_child(crate)
+		$GameScene.add_child(crate)
 		
 func _on_mob_spawn_timer_timeout() -> void:
-	if($Player.get_child_count() == 0):
+	if($GameScene/Player.get_child_count() == 0):
 		return
 	
-	if(mobsCnt <= 100):
-		var player = $Player.get_child(0)
+	if(mobsCnt <= 50):
+		var player = $GameScene/Player.get_child(0)
 		var playerPosition = player.position
 		
-		var rand = RandomNumberGenerator.new()
-		var screen_size = get_viewport().get_visible_rect().size
-		
-		var enemiesCount = rand.randi_range(30, 50)
+		var enemiesCount = randi_range(10, 20)
 		for i in range(0,enemiesCount):
-			var enemyTypeInd = rand.randi_range(0, 1)
+			var enemyTypeInd = randi_range(0, 1)
 			var enemyObject = enemiesTypes[enemyTypeInd].instantiate()
 			
 			
@@ -78,21 +74,22 @@ func _on_mob_spawn_timer_timeout() -> void:
 			var randomPos = Vector2(x,y) + playerPosition
 			
 			enemyObject.position = randomPos
-			add_child(enemyObject)
+			$GameScene.add_child(enemyObject)
 
 func _on_debug_timer_timeout() -> void:
-	if($Player.get_child_count() == 0):
+	if($GameScene/Player.get_child_count() == 0):
 		return
 		
-	var player = $Player.get_child(0)
+	var player = $GameScene/Player.get_child(0)
 	var playerPosition = player.position
 	
-	print(player.score)
+	print(mobsCnt)
 
-func _on_child_entered_tree(node: Node) -> void:
+func _on_game_scene_child_entered_tree(node: Node) -> void:
 	if(node.has_node("enemy")):
 		mobsCnt += 1
-		
-func _on_child_exiting_tree(node: Node) -> void:
+
+
+func _on_game_scene_child_exiting_tree(node: Node) -> void:
 	if(node.has_node("enemy")):
 		mobsCnt -= 1

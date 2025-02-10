@@ -7,24 +7,28 @@
 [node name="Main" type="Node2D"]
 script = ExtResource("1_320vk")
 
-[node name="MobSpawnTimer" type="Timer" parent="."]
-wait_time = 2.0
-
-[node name="Player" type="Node" parent="."]
-
 [node name="MainMenu" parent="." instance=ExtResource("2_4v00h")]
-
-[node name="Map" type="Node2D" parent="."]
-z_index = -1
-
-[node name="DebugTimer" type="Timer" parent="."]
-autostart = true
+process_mode = 3
 
 [node name="Interface" parent="." instance=ExtResource("3_ari5s")]
+process_mode = 2
 visible = false
 
-[connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
-[connection signal="child_exiting_tree" from="." to="." method="_on_child_exiting_tree"]
-[connection signal="timeout" from="MobSpawnTimer" to="." method="_on_mob_spawn_timer_timeout"]
+[node name="GameScene" type="Node" parent="."]
+
+[node name="MobSpawnTimer" type="Timer" parent="GameScene"]
+wait_time = 2.0
+
+[node name="Player" type="Node" parent="GameScene"]
+
+[node name="Map" type="Node2D" parent="GameScene"]
+z_index = -1
+
+[node name="DebugTimer" type="Timer" parent="GameScene"]
+autostart = true
+
 [connection signal="startGame" from="MainMenu" to="." method="_on_main_menu_start_game"]
-[connection signal="timeout" from="DebugTimer" to="." method="_on_debug_timer_timeout"]
+[connection signal="child_entered_tree" from="GameScene" to="." method="_on_game_scene_child_entered_tree"]
+[connection signal="child_exiting_tree" from="GameScene" to="." method="_on_game_scene_child_exiting_tree"]
+[connection signal="timeout" from="GameScene/MobSpawnTimer" to="." method="_on_mob_spawn_timer_timeout"]
+[connection signal="timeout" from="GameScene/DebugTimer" to="." method="_on_debug_timer_timeout"]

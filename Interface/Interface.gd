@@ -27,6 +27,7 @@ func changeExpereance(experience: int):
 func showSkillsLvlUpForPlayer():
 	$SkillsPanelScene.generateSkills()
 	$SkillsPanelScene.visible = true
+	get_tree().paused = true
 
 func learnSkill(skillInd: int, skillLevel: int, skillIcon: CompressedTexture2D) -> void:
 	var panel = $Control/MarginContainer/AbilityPanel
@@ -38,9 +39,8 @@ func learnSkill(skillInd: int, skillLevel: int, skillIcon: CompressedTexture2D) 
 		panel.add_child(ability)
 	else:
 		var ind = skillPanel[skillInd][1]
-		var lvl = skillPanel[skillInd][0]
-		lvl += 1
 		panel.get_child(ind).increaseLevel()
+	get_tree().paused = false
 
 func _on_timer_timeout() -> void:
 	currentSeconds += 1

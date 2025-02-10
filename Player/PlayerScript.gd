@@ -25,9 +25,9 @@ var currentPlayerSpeed = walkSpeed
 
 func _ready() -> void:
 	motion_mode = MOTION_MODE_FLOATING
-	var interface = get_parent().get_parent().get_node("Interface")
+	var interface = get_parent().get_parent().get_parent().get_node("Interface")
 	interface.levelUp(level, nextLevelExp)
-	var skillsPanel = interface.get_node("SkillsPanelScene")
+	
 	$HpBar.value = curHp
 	$HpBar.max_value = maxHp
 	var hpBarSize = $HpBar.get_rect().size
@@ -78,11 +78,11 @@ func _on_player_area_entered(area: Area2D) -> void:
 	elif(area.name == "item"):
 		score +=1 
 		area.get_parent().queue_free()
-		get_parent().get_parent().get_node("Interface").collectCoin()
+		get_parent().get_parent().get_parent().get_node("Interface").collectCoin()
 		collectExp()
 
 func collectExp():
-	var interface = get_parent().get_parent().get_node("Interface")
+	var interface = get_parent().get_parent().get_parent().get_node("Interface")
 	
 	curExp += 1
 	if(curExp >= nextLevelExp):
