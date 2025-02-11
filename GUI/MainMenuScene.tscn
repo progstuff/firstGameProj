@@ -1,0 +1,80 @@
+[gd_scene load_steps=11 format=3 uid="uid://w5kbguyafcqp"]
+
+[ext_resource type="Script" path="res://GUI/MainMenuScript.gd" id="1_bgyd6"]
+[ext_resource type="Texture2D" uid="uid://bv12fjpowngts" path="res://GUI/B_NewGame2.png" id="1_p7f1i"]
+[ext_resource type="Texture2D" uid="uid://bsjluh8pebk1g" path="res://GUI/B_NewGame3.png" id="2_pdxyc"]
+[ext_resource type="Texture2D" uid="uid://ck2u2j83a2p0v" path="res://GUI/B_NewGame1.png" id="3_3qhct"]
+[ext_resource type="FontFile" uid="uid://c6pgbrf7qyhdc" path="res://Interface/Planes_ValMore.ttf" id="5_p0cce"]
+[ext_resource type="Texture2D" uid="uid://omb52yp0wifn" path="res://GUI/B_Restart2.png" id="6_g85hc"]
+[ext_resource type="Texture2D" uid="uid://c357gwp0agasa" path="res://GUI/B_Restart3.png" id="7_j7mfp"]
+[ext_resource type="Texture2D" uid="uid://bgl64cjjnas1n" path="res://GUI/B_Restart1.png" id="8_v0ysk"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_o1khh"]
+font = ExtResource("5_p0cce")
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_ox4h6"]
+font = ExtResource("5_p0cce")
+font_size = 32
+
+[node name="MainMenu" type="CanvasLayer"]
+script = ExtResource("1_bgyd6")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1149.0
+offset_bottom = 647.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Menus" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StartMenuContainer" type="VBoxContainer" parent="Control/Menus"]
+layout_mode = 2
+
+[node name="NewGameButton" type="TextureButton" parent="Control/Menus/StartMenuContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("1_p7f1i")
+texture_pressed = ExtResource("2_pdxyc")
+texture_hover = ExtResource("3_3qhct")
+
+[node name="PauseLabel" type="Label" parent="Control/Menus"]
+layout_mode = 2
+text = "ПАУЗА"
+label_settings = SubResource("LabelSettings_o1khh")
+horizontal_alignment = 1
+
+[node name="GameOverMenu" type="VBoxContainer" parent="Control/Menus"]
+layout_mode = 2
+
+[node name="GameOverLabel" type="Label" parent="Control/Menus/GameOverMenu"]
+layout_mode = 2
+text = "КОНЕЦ ИГРЫ"
+label_settings = SubResource("LabelSettings_ox4h6")
+horizontal_alignment = 1
+
+[node name="RestartButton" type="TextureButton" parent="Control/Menus/GameOverMenu"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("6_g85hc")
+texture_pressed = ExtResource("7_j7mfp")
+texture_hover = ExtResource("8_v0ysk")
+
+[connection signal="button_down" from="Control/Menus/StartMenuContainer/NewGameButton" to="." method="_on_new_game_button_button_down"]
+[connection signal="button_down" from="Control/Menus/GameOverMenu/RestartButton" to="." method="_on_restart_button_button_down"]

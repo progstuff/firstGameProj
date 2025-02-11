@@ -7,7 +7,20 @@ var skillPanel = {}
 var currentSeconds = 0
 
 func init() -> void:
+	var panel = $Control/MarginContainer/AbilityPanel
+	for n in panel.get_children():
+		panel.remove_child(n)
+		n.queue_free()
+	skillPanel.clear()
+	
+	coinsCnt = 0
 	currentSeconds = 0
+	
+	$Control/TimeCounter/Time.text = "00:00"
+	
+	var coinsCounterLbl = $Control/CoinsCounterContainer/HBoxContainer/CoinsCounter
+	coinsCounterLbl.text = str(coinsCnt)
+	
 	$Control/TimeCounter/Timer.start()
 	visible = true
 	

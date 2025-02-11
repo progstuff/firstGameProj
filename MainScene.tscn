@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://clf77pvuvpr6c"]
 
 [ext_resource type="Script" path="res://MainScript.gd" id="1_320vk"]
-[ext_resource type="PackedScene" uid="uid://w5kbguyafcqp" path="res://GUI/MainMenu.tscn" id="2_4v00h"]
+[ext_resource type="PackedScene" uid="uid://w5kbguyafcqp" path="res://GUI/MainMenuScene.tscn" id="2_4v00h"]
 [ext_resource type="PackedScene" uid="uid://ba4x5167abphj" path="res://Interface/Interface.tscn" id="3_ari5s"]
 
 [node name="Main" type="Node2D"]
@@ -27,6 +27,13 @@ z_index = -1
 [node name="DebugTimer" type="Timer" parent="GameScene"]
 autostart = true
 
+[node name="Enemies" type="Node" parent="GameScene"]
+
+[node name="Items" type="Node" parent="GameScene"]
+
+[node name="Coins" type="Node" parent="GameScene"]
+
+[connection signal="restartGame" from="MainMenu" to="." method="_on_main_menu_restart_game"]
 [connection signal="startGame" from="MainMenu" to="." method="_on_main_menu_start_game"]
 [connection signal="child_entered_tree" from="GameScene" to="." method="_on_game_scene_child_entered_tree"]
 [connection signal="child_exiting_tree" from="GameScene" to="." method="_on_game_scene_child_exiting_tree"]

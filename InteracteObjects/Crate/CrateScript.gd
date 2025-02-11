@@ -1,5 +1,5 @@
 extends StaticBody2D
-
+@onready var coinsContainer = $"../../Coins"
 var coinScene = load("res://Items/Coin/CoinScene.tscn")
 @export var live = 1
 
@@ -20,5 +20,5 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if(anim_name == "destroy"):
 		var coin = coinScene.instantiate()
 		coin.position = position
-		get_parent().add_child(coin)
+		coinsContainer.add_child(coin)
 		queue_free()

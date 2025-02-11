@@ -2,7 +2,8 @@ extends CharacterBody2D
 
 class_name EnemyClass
 
-@onready var player = $"../Player"
+@onready var player = $"../../Player"
+@onready var coinsContainer = $"../../Coins"
 var coinScene = load("res://Items/Coin/CoinScene.tscn")
 
 @export var typeName = "enemy"
@@ -69,6 +70,8 @@ func move(delta: float) -> void:
 		move_and_slide()
 
 func changePosition(delta: float):
+	if(player.get_child_count() == 0):
+		return
 	var playerPosition = player.get_child(0).position
 	var direction = input_movement
 	
@@ -110,7 +113,7 @@ func changePosition(delta: float):
 func erase() -> void:
 	var coin = coinScene.instantiate()
 	coin.position = position
-	get_parent().add_child(coin)
+	coinsContainer.add_child(coin)
 	queue_free()
 
 func _on_enemy_area_entered(area: Area2D) -> void:

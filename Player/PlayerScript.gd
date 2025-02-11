@@ -73,7 +73,10 @@ func _on_player_area_entered(area: Area2D) -> void:
 		if(current_state != states.DODGE):
 			var damage = area.get_parent().getDamage()
 			curHp -= damage
+			if(curHp < 0):
+				curHp = 0
 			$HpBar.value = curHp
+			
 		
 	elif(area.name == "item"):
 		score +=1 

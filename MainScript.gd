@@ -18,12 +18,45 @@ func _process(_delta: float) -> void:
 		return
 		
 	var player = $GameScene/Player.get_child(0)
+	
+	if player.curHp <= 0:
+		get_tree().paused = true
+		player.visible = false
+		
+		$MainMenu.layer = 2
+		$MainMenu.showGameOverMenu()
+		
 	var playerPosition = player.position
 					
 	if($GameScene/Map.get_child_count() == 0):
 		return
 		
 	$GameScene/Map.get_child(0).playerCoords = playerPosition
+
+func clearScene() -> void:
+	$GameScene/MobSpawnTimer.stop()
+	
+	for n in $GameScene/Map.get_children():
+		$GameScene/Map.remove_child(n)
+		n.queue_free()
+		
+	for n in $GameScene/Coins.get_children():
+		$GameScene/Coins.remove_child(n)
+		n.queue_free()
+		
+	for n in $GameScene/Enemies.get_children():
+		$GameScene/Enemies.remove_child(n)
+		n.queue_free()
+	
+	for n in $GameScene/Items.get_children():
+		$GameScene/Items.remove_child(n)
+		n.queue_free()
+	
+	for n in $GameScene/Player.get_children():
+		$GameScene/Player.remove_child(n)
+		n.queue_free()
+		
+	$Interface.visible = false
 	
 func _on_main_menu_start_game() -> void:
 	
@@ -51,7 +84,7 @@ func generateCrates() -> void:
 		var x = randi_range(0, 1000);
 		var y = randi_range(-300, 300);
 		crate.position = Vector2(x, y)
-		$GameScene.add_child(crate)
+		$GameScene/Items.add_child(crate)
 		
 func _on_mob_spawn_timer_timeout() -> void:
 	if($GameScene/Player.get_child_count() == 0):
@@ -74,7 +107,7 @@ func _on_mob_spawn_timer_timeout() -> void:
 			var randomPos = Vector2(x,y) + playerPosition
 			
 			enemyObject.position = randomPos
-			$GameScene.add_child(enemyObject)
+			$GameScene/Enemies.add_child(enemyObject)
 
 func _on_debug_timer_timeout() -> void:
 	if($GameScene/Player.get_child_count() == 0):
@@ -89,7 +122,12 @@ func _on_game_scene_child_entered_tree(node: Node) -> void:
 	if(node.has_node("enemy")):
 		mobsCnt += 1
 
-
 func _on_game_scene_child_exiting_tree(node: Node) -> void:
 	if(node.has_node("enemy")):
 		mobsCnt -= 1
+
+func _on_main_menu_restart_game() -> void:
+	clearScene()
+	_on_main_menu_start_game()
+	$MainMenu.layer = 1
+	get_tree().paused = false
