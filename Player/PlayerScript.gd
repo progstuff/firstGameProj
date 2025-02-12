@@ -37,6 +37,13 @@ func _ready() -> void:
 	$HpBar.position = hpBarShift
 	
 func _physics_process(_delta: float) -> void:
+	
+	if(Input.is_action_just_pressed("ZoomIn")):
+		$Camera2D.zoom = $Camera2D.zoom*1.1
+	
+	if(Input.is_action_just_pressed("ZoomOut")):
+		$Camera2D.zoom = $Camera2D.zoom/1.1
+		
 	move()
 			
 func move() -> void:
@@ -53,7 +60,7 @@ func move() -> void:
 			currentPlayerSpeed = shiftSpeed
 			$CollisionShape2D.disabled = true
 			$Timer.start()
-		
+			
 		velocity = input_movement  * currentPlayerSpeed
 	
 	if input_movement == Vector2.ZERO:

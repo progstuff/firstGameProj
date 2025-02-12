@@ -18,6 +18,7 @@ var coinScene = load("res://Items/Coin/CoinScene.tscn")
 @onready var anim_state = $AnimationTree.get("parameters/playback")
 @onready var anim_tree = $AnimationTree
 
+
 var hpBarShift = Vector2.ZERO
 
 enum states {MOVE, RAGE, IDLE, DEAD}
@@ -25,6 +26,15 @@ var currentState = states.RAGE
 
 var patruleDistance = 200
 var centerPoint = Vector2.ZERO
+
+var curStepInd = 0
+var maxStepCnt = 0
+
+var sumDelta = 0
+var playerPrevPosition = Vector2.ZERO
+var enemyPrevPosition = Vector2.ZERO
+
+var playerThreshhold = 800
 
 func _ready() -> void:
 	motion_mode = MOTION_MODE_FLOATING
@@ -36,18 +46,21 @@ func _ready() -> void:
 	hpBarShift.x = -hpBarSize.x/2
 	$HpBar.position = hpBarShift
 	
-	rageSpeed = randi_range(20, 64)
-	walkSpeed = randi_range(10, 20)
+	rageSpeed = randi_range(20, 64)*(maxStepCnt+1)
+	walkSpeed = randi_range(10, 20)*(maxStepCnt+1)
 	
 func _physics_process(_delta: float) -> void:
-	
-	match currentState:
-		states.MOVE:
-			move(_delta)
-		states.RAGE:
-			move(_delta)
-		states.DEAD:
-			dead()
+	if(curStepInd == maxStepCnt):
+		curStepInd = 0
+		match currentState:
+			states.MOVE:
+				move(_delta)
+			states.RAGE:
+				move(_delta)
+			states.DEAD:
+				dead()
+	else:
+		curStepInd += 1
 			
 func dead() -> void:
 	anim_state.travel("Dead")
@@ -80,19 +93,29 @@ func changePosition(delta: float):
 	
 	if(curHp <= 0):
 		direction = Vector2.ZERO
-	else:
-		var distance = (position - playerPosition).length()
-
-		#if(distance <= 100):
-		#	currentState = states.RAGE
-		#elif(distance >= 150):
-		#	if(currentState == states.RAGE):
-		#		currentState = states.MOVE
-		#		centerPoint = position
-		#	elif(currentState == states.MOVE):
-		#		if(centerPoint == Vector2.ZERO):
-		#			centerPoint = position
-		#			direction = Vector2(randf_range(-1, 1), randf_range(-1, 1))
+		return
+		
+	var distance = (position - playerPosition).length()
+	
+	if(distance > playerThreshhold):
+		if(playerPrevPosition != Vector2.ZERO):
+			direction = enemyPrevPosition.direction_to(playerPrevPosition)
+			direction = direction.normalized()
+			position = playerPosition + direction*playerThreshhold*0.8
+			playerPrevPosition = playerPosition
+			enemyPrevPosition = position
+			return
+		
+	#if(distance <= 100):
+	#	currentState = states.RAGE
+	#elif(distance >= 150):
+	#	if(currentState == states.RAGE):
+	#		currentState = states.MOVE
+	#		centerPoint = position
+	#	elif(currentState == states.MOVE):
+	#		if(centerPoint == Vector2.ZERO):
+	#			centerPoint = position
+	#			direction = Vector2(randf_range(-1, 1), randf_range(-1, 1))
 	
 	if(currentState == states.RAGE):
 		direction = position.direction_to(playerPosition)
@@ -109,7 +132,10 @@ func changePosition(delta: float):
 		direction = direction.normalized()
 		input_movement = direction
 		position = position + direction*walkSpeed*delta
-		
+	
+	enemyPrevPosition = position
+	playerPrevPosition = playerPosition
+	
 func erase() -> void:
 	var coin = coinScene.instantiate()
 	coin.position = position

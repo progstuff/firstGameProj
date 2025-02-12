@@ -90,15 +90,14 @@ func _on_mob_spawn_timer_timeout() -> void:
 	if($GameScene/Player.get_child_count() == 0):
 		return
 	
-	if(mobsCnt <= 50):
+	if(mobsCnt <= 200):
 		var player = $GameScene/Player.get_child(0)
 		var playerPosition = player.position
 		
-		var enemiesCount = randi_range(10, 20)
+		var enemiesCount = randi_range(5, 20)
 		for i in range(0,enemiesCount):
 			var enemyTypeInd = randi_range(0, 1)
 			var enemyObject = enemiesTypes[enemyTypeInd].instantiate()
-			
 			
 			var degree = randf_range(0, 2*PI)
 			var distance = randf_range(500, 900)
@@ -118,16 +117,15 @@ func _on_debug_timer_timeout() -> void:
 	
 	print(mobsCnt)
 
-func _on_game_scene_child_entered_tree(node: Node) -> void:
-	if(node.has_node("enemy")):
-		mobsCnt += 1
-
-func _on_game_scene_child_exiting_tree(node: Node) -> void:
-	if(node.has_node("enemy")):
-		mobsCnt -= 1
-
 func _on_main_menu_restart_game() -> void:
 	clearScene()
 	_on_main_menu_start_game()
 	$MainMenu.layer = 1
 	get_tree().paused = false
+
+
+func _on_enemies_child_entered_tree(node: Node) -> void:
+	mobsCnt += 1
+
+func _on_enemies_child_exiting_tree(node: Node) -> void:
+	mobsCnt -= 1

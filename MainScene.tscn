@@ -39,3 +39,5 @@ autostart = true
 [connection signal="child_exiting_tree" from="GameScene" to="." method="_on_game_scene_child_exiting_tree"]
 [connection signal="timeout" from="GameScene/MobSpawnTimer" to="." method="_on_mob_spawn_timer_timeout"]
 [connection signal="timeout" from="GameScene/DebugTimer" to="." method="_on_debug_timer_timeout"]
+[connection signal="child_entered_tree" from="GameScene/Enemies" to="." method="_on_enemies_child_entered_tree"]
+[connection signal="child_exiting_tree" from="GameScene/Enemies" to="." method="_on_enemies_child_exiting_tree"]

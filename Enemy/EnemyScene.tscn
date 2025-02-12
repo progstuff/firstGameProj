@@ -331,6 +331,7 @@ frame = 4
 physics_interpolation_mode = 1
 light_mask = 2
 shape = SubResource("RectangleShape2D_u162p")
+disabled = true
 debug_color = Color(0.788226, 0.294369, 0.788989, 0.42)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
